@@ -1,8 +1,8 @@
 # gec-data-utils
 Grammatical error correction utilities for data preparation and results evaluation.
 
-## GEC Data Preparation
-### GEC Datasets Preparation
+## GEC Parallel Data Preparation
+### GEC Datasets
 Note that the GEC datasets should be prepared in advanced and zipped into `datasets.zip`. Place `datasets.zip` in the root directory so that the script can find it. The structure of `datasets.zip` is like:  
 
 datasets.zip -|  
@@ -17,7 +17,7 @@ datasets.zip -|
 + CoNLL-2014 can be downloaded from its [website](https://www.comp.nus.edu.sg/~nlp/conll14st.html).
 + The JFLEG tar ball is made by cloning the [JFLEG repo](https://github.com/keisks/jfleg) and compressing it.
 
-### Parallel Data Generation
+### Parallel Data Preparation
 Run the command below to prepare for the GEC data.  
 
 ```bash
@@ -28,6 +28,8 @@ The command will generate a `data` directory with three sub-directories inside: 
 + `tar`: contains files (GEC dataset tar balls) unzipped from `datasets.zip`.
 + `ori`: contains what are unziped from each tar ball in `tar`.
 + `raw`: contains parallel GEC data.
+
+The parallel data in `raw` can then be tokenized with specific needs. And the tokenized data can be used for model training and testing.
 
 ## Evaluation
 Note that m2scorer is needed for the FCE and CoNLL-2014 evaluation. Place it in the `scorers` directory. It can be downloaded [here](https://www.comp.nus.edu.sg/~nlp/conll14st.html).
