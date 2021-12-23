@@ -6,8 +6,8 @@ if len(sys.argv) != 3:
 
 fp_src_w_err_free = sys.argv[1]
 fp_trg_w_err_free = sys.argv[2]
-fp_src_wo_err_free = fp_src_w_err_free.replace("w.err.free", "wo.err.free")
-fp_trg_wo_err_free = fp_trg_w_err_free.replace("w.err.free", "wo.err.free")
+fp_src_wo_err_free = fp_src_w_err_free.replace("w.err-free", "wo.err-free")
+fp_trg_wo_err_free = fp_trg_w_err_free.replace("w.err-free", "wo.err-free")
 
 with open(fp_src_w_err_free, "r") as f_src_w_err_free, open(fp_trg_w_err_free, "r") as f_trg_w_err_free, \
         open(fp_src_wo_err_free, "w") as f_src_wo_err_free, open(fp_trg_wo_err_free, "w") as f_trg_wo_err_free:

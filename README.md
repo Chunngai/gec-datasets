@@ -40,10 +40,10 @@ Statistics:
   1037561 data/raw/lang8.trg
     34308 data/raw/wi_locness-train.src
     34308 data/raw/wi_locness-train.trg
-  1157370 data/raw/train.src.w.err.free
-  1157370 data/raw/train.trg.w.err.free
-   561525 data/raw/train.src.wo.err.free
-   561525 data/raw/train.trg.wo.err.free
+  1157370 data/raw/train.w.err.free.src
+  1157370 data/raw/train.w.err.free.trg
+   561525 data/raw/train.wo.err.free.src
+   561525 data/raw/train.wo.err.free.trg
 
      4384 data/raw/wi_locness-valid.src
      4384 data/raw/wi_locness-valid.trg
@@ -54,8 +54,8 @@ Statistics:
      2695 data/raw/fce-test.trg
      1312 data/raw/conll14.src
      1312 data/raw/conll14.trg
-      747 data/raw/jfleg.src
      4477 data/raw/wi_locness-test.src
+     747 data/raw/jfleg.src
 
   5783304 total
 ```
@@ -81,16 +81,16 @@ sh test_conll14.sh output_samples/conll14.out
 + Recall      : 0.4636
 + F_0.5       : 0.6243
 
-### JFLEG Evaluation
-```bash
-sh test_jfleg.sh output_samples/jfleg.out
-```
-
-+ GLEU: 0.614138
-
 ### Write\&Improve+LOCNESS Evaluation.
 The Write\&Improve+LOCNESS dataset should be evaluated on [Codalab](https://competitions.codalab.org/competitions/20228#participate) by compressing the output into a .zip file and submitting it in "Participate".
 
 + p_cs:66.40
 + r_cs:61.21
 + f0.5_cs:65.29
+
+### JFLEG Evaluation
+```bash
+sh test_jfleg.sh output_samples/jfleg.out
+```
+
++ GLEU: 0.614138
