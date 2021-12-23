@@ -94,3 +94,9 @@ sh test_jfleg.sh output_samples/jfleg.out
 ```
 
 + GLEU: 0.614138
+
+## M2 Generation
+Additionally, data files in `data/raw` can be converted into m2 format with the following command.
+```bash
+sh prepare_m2.sh
+```

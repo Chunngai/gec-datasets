@@ -1,5 +1,10 @@
 .idea/
+.ipynb_checkpoints/
+.errant-2-0-0/
+.errant-2-3-0/
 
 datasets.zip
 data/
 
+en_core_web_sm-1.2.0.tar.gz
+en_core_web_sm-2.3.1.tar.gz

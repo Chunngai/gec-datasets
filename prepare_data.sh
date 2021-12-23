@@ -1,15 +1,8 @@
 set -ex
 
-m2_to_parallel="scripts/m2_to_parallel.py"
-rm_err_free="scripts/rm_err_free.py"
+source ./vars.sh
 
-DATA="data"
-TAR="$DATA/tar"
-ORI="$DATA/ori"
-RAW="$DATA/raw"
-
-# Preparation.
-mkdir -p $DATA $TAR $ORI $RAW
+# Unzips datasets.zip.
 unzip -o "datasets.zip" -d $DATA
 mv $DATA/*gz $DATA/*bz2 $TAR
 
