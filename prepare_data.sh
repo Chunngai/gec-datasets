@@ -43,3 +43,6 @@ cp "$RAW/wi_locness-valid.trg" "$RAW/valid.trg"
 
 # Check.
 wc -l $RAW/*
+
+# Test.
+bash test/test_output_samples.sh
