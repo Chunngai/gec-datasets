@@ -2,13 +2,14 @@
 
 import sys
 
-if len(sys.argv) != 4:
-    print("[USAGE] %s m2_file output_src output_tgt" % sys.argv[0])
+if len(sys.argv) != 5:
+    print("[USAGE] %s m2_file output_src output_tgt annotator_id" % sys.argv[0])
     sys.exit()
 
 input_path = sys.argv[1]
 output_src_path = sys.argv[2]
 output_tgt_path = sys.argv[3]
+annotator_id = sys.argv[4]
 
 words = []
 corrected = []
@@ -27,6 +28,11 @@ with open(input_path) as input_file, \
             corrected = ['<S>'] + words[:]
             output_src_file.write(line + '\n')
         elif line.startswith('A'):
+
+            # Only keeps the annotation of the specified annotator.
+            if line.split("|||")[-1] != annotator_id:
+                continue
+
             line = line[2:]
             info = line.split("|||")
             sid, eid = info[0].split()
