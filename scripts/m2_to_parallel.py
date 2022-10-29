@@ -1,43 +1,61 @@
-import argparse
+#!/usr/bin/env python
 
+import sys
 
-# Apply the edits of a single annotator to generate the corrected sentences.
-def main(args):
-    m2 = open(args.m2_file).read().strip().split("\n\n")
-    f_srcs = open(args.fsrcs, "w")
-    f_trgs = open(args.ftrgs, "w")
-    # Do not apply edits with these error types
-    skip = {"noop", "UNK", "Um"}
+if len(sys.argv) != 4:
+    print("[USAGE] %s m2_file output_src output_tgt" % sys.argv[0])
+    sys.exit()
 
-    for sent in m2:
-        sent = sent.split("\n")
-        ori_sent = sent[0].split()[1:]  # Ignore "S "
-        cor_sent = sent[0].split()[1:]  # Ignore "S "
-        edits = sent[1:]
-        offset = 0
-        for edit in edits:
-            edit = edit.split("|||")
-            if edit[1] in skip: continue  # Ignore certain edits
-            coder = int(edit[-1])
-            if coder != args.id: continue  # Ignore other coders
-            span = edit[0].split()[1:]  # Ignore "A "
-            start = int(span[0])
-            end = int(span[1])
-            cor = edit[2].split()
-            cor_sent[start + offset:end + offset] = cor
-            offset = offset - (end - start) + len(cor)
-        f_srcs.write(" ".join(ori_sent) + "\n")
-        f_trgs.write(" ".join(cor_sent) + "\n")
+input_path = sys.argv[1]
+output_src_path = sys.argv[2]
+output_tgt_path = sys.argv[3]
 
+words = []
+corrected = []
+sid = eid = 0
+prev_sid = prev_eid = -1
+pos = 0
 
-if __name__ == "__main__":
-    # Modified from https://www.cl.cam.ac.uk/research/nl/bea2019st/data/corr_from_m2.py
-
-    # Define and parse program input
-    parser = argparse.ArgumentParser()
-    parser.add_argument("m2_file", help="The path to an input m2 file.")
-    parser.add_argument("--fsrcs", help="A path to where we save the output original text file.", required=True)
-    parser.add_argument("--ftrgs", help="A path to where we save the output corrected text file.", required=True)
-    parser.add_argument("--id", help="The id of the target annotator in the m2 file.", type=int, default=0)
-    args = parser.parse_args()
-    main(args)
+with open(input_path) as input_file, \
+        open(output_src_path, 'w') as output_src_file, \
+        open(output_tgt_path, 'w') as output_tgt_file:
+    for line in input_file:
+        line = line.strip()
+        if line.startswith('S'):
+            line = line[2:]
+            words = line.split()
+            corrected = ['<S>'] + words[:]
+            output_src_file.write(line + '\n')
+        elif line.startswith('A'):
+            line = line[2:]
+            info = line.split("|||")
+            sid, eid = info[0].split()
+            sid = int(sid) + 1
+            eid = int(eid) + 1
+            error_type = info[1]
+            if error_type == "Um":
+                continue
+            for idx in range(sid, eid):
+                corrected[idx] = ""
+            if sid == eid:
+                if sid == 0:
+                    continue  # Originally index was -1, indicating no op
+                if sid != prev_sid or eid != prev_eid:
+                    pos = len(corrected[sid - 1].split())
+                cur_words = corrected[sid - 1].split()
+                cur_words.insert(pos, info[2])
+                pos += len(info[2].split())
+                corrected[sid - 1] = " ".join(cur_words)
+            else:
+                corrected[sid] = info[2]
+                pos = 0
+            prev_sid = sid
+            prev_eid = eid
+        else:
+            target_sentence = ' '.join([word for word in corrected if word != ""])
+            assert target_sentence.startswith('<S>'), '(' + target_sentence + ')'
+            target_sentence = target_sentence[4:]
+            output_tgt_file.write(target_sentence + '\n')
+            prev_sid = -1
+            prev_eid = -1
+            pos = 0
