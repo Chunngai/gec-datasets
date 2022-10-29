@@ -2,11 +2,11 @@ set -ex
 
 source ./vars.sh
 
-M2="$DATA/m2"
+M2="$DATA/m2.200"
 mkdir -p $M2
 
-python3.6 -m venv .errant
-source .errant/bin/activate
+python3.6 -m venv .errant200
+source .errant200/bin/activate
 
 pip3 install -U setuptools wheel
 pip3 install errant==2.0.0
