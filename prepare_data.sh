@@ -26,10 +26,10 @@ python3 -u $m2_to_parallel "$ORI/wi_locness/wi+locness/m2/ABC.train.gold.bea19.m
 # Valid data.
 python3 -u $m2_to_parallel "$ORI/wi_locness/wi+locness/m2/ABCN.dev.gold.bea19.m2" "$RAW/wi_locness-valid.src" "$RAW/wi_locness-valid.trg" 0
 # Test data.
-#python3 -u $m2_to_parallel "$ORI/fce/fce/m2/fce.test.gold.bea19.m2" "$RAW/fce-test.src" "$RAW/fce-test.trg" 0
-#python3 -u $m2_to_parallel "$ORI/conll2014/conll14st-test-data/noalt/official-2014.combined.m2" "$RAW/conll14.src" "$RAW/conll14.trg" 0
-#cp "$ORI/wi_locness/wi+locness/test/ABCN.test.bea19.orig" "$RAW/wi_locness-test.src"
-#cp "$ORI/jfleg/jfleg-master/test/test.src" "$RAW/jfleg.src"
+python3 -u $m2_to_parallel "$ORI/fce/fce/m2/fce.test.gold.bea19.m2" "$RAW/fce-test.src" "$RAW/fce-test.trg" 0
+python3 -u $m2_to_parallel "$ORI/conll2014/conll14st-test-data/noalt/official-2014.combined.m2" "$RAW/conll14.src" "$RAW/conll14.trg" 0
+cp "$ORI/wi_locness/wi+locness/test/ABCN.test.bea19.orig" "$RAW/wi_locness-test.src"
+cp "$ORI/jfleg/jfleg-master/test/test.src" "$RAW/jfleg.src"
 
 # [TASK SPECIFIC] Combines for train data.
 cat "$RAW/fce-train.src" "$RAW/nucle.src" "$RAW/lang8.src" "$RAW/wi_locness-train.src" > "$RAW/train.w.err-free.src"
