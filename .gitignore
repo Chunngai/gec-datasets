@@ -1,6 +1,8 @@
 .idea/
 .ipynb_checkpoints/
 .errant
+.errant200
+.errant230
 
 datasets.zip
 

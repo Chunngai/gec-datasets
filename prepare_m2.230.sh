@@ -14,7 +14,7 @@ if [ ! -f packages/en_core_web_sm-2.3.1.tar.gz ]; then
   wget https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz -P packages/
 fi
 pip3 install packages/"en_core_web_sm-2.3.1.tar.gz"  # Downloaded from https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz
-python3.7 -m spacy link en_core_web_sm en # Creates a shortcut link.
+python3.7 -m spacy link --force en_core_web_sm en # Creates a shortcut link.
 
 for dataset in "fce-train" "nucle" "lang8" "wi_locness-train" "wi_locness-valid"; do
   if [ ! -f "$M2/$dataset"".m2" ]; then
