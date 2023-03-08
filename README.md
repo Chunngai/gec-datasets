@@ -36,14 +36,14 @@ Statistics:
     28350 data/raw/fce-train.trg
     57151 data/raw/nucle.src
     57151 data/raw/nucle.trg
-  1037561 data/raw/lang8.src
-  1037561 data/raw/lang8.trg
+  1102354 data/raw/lang8.src
+  1102354 data/raw/lang8.trg
     34308 data/raw/wi_locness-train.src
     34308 data/raw/wi_locness-train.trg
-  1157370 data/raw/train.w.err.free.src
-  1157370 data/raw/train.w.err.free.trg
-   561525 data/raw/train.wo.err.free.src
-   561525 data/raw/train.wo.err.free.trg
+  1222163 data/raw/train.w.err-free.src
+  1222163 data/raw/train.w.err-free.trg
+   624958 data/raw/train.wo.err-free.src
+   624958 data/raw/train.wo.err-free.trg
 
      4384 data/raw/wi_locness-valid.src
      4384 data/raw/wi_locness-valid.trg
