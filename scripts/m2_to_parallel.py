@@ -17,21 +17,50 @@ sid = eid = 0
 prev_sid = prev_eid = -1
 pos = 0
 
+source_sentence = None
+target_sentences = set()
+cur_annotator_id = 0
+
 with open(input_path) as input_file, \
         open(output_src_path, 'w') as output_src_file, \
         open(output_tgt_path, 'w') as output_tgt_file:
     for line in input_file:
         line = line.strip()
         if line.startswith('S'):
-            line = line[2:]
-            words = line.split()
+            # Src.
+            source_sentence = line[2:]
+            # Trg tokens.
+            words = source_sentence.split()
             corrected = ['<S>'] + words[:]
-            output_src_file.write(line + '\n')
         elif line.startswith('A'):
 
-            # Only keeps the annotation of the specified annotator.
-            if line.split("|||")[-1] != annotator_id:
-                continue
+            annotator_id_of_the_line = int(line.split("|||")[-1])
+            if annotator_id == "*":
+                if annotator_id_of_the_line != cur_annotator_id:  # The aid changes.
+                    target_sentence = ' '.join([word for word in corrected if word != ""])
+                    assert target_sentence.startswith('<S>'), '(' + target_sentence + ')'
+                    target_sentence = target_sentence[4:]
+                    if target_sentence.strip() not in target_sentences:
+                        # Save the src.
+                        output_src_file.write(source_sentence + '\n')
+                        # Save the trg.
+                        output_tgt_file.write(target_sentence + '\n')
+
+                        target_sentences.add(target_sentence)
+
+                    # Restore the trg tokens.
+                    words = source_sentence.split()
+                    corrected = ['<S>'] + words[:]
+
+                    # Update the annotator id.
+                    cur_annotator_id += 1
+
+                    prev_sid = -1
+                    prev_eid = -1
+                    pos = 0
+            else:  # The annotator id is specified.
+                if int(annotator_id) != annotator_id_of_the_line:
+                    continue
 
             line = line[2:]
             info = line.split("|||")
@@ -61,7 +90,17 @@ with open(input_path) as input_file, \
             target_sentence = ' '.join([word for word in corrected if word != ""])
             assert target_sentence.startswith('<S>'), '(' + target_sentence + ')'
             target_sentence = target_sentence[4:]
-            output_tgt_file.write(target_sentence + '\n')
+            if target_sentence.strip() not in target_sentences:
+                # Save the src.
+                output_src_file.write(source_sentence + '\n')
+                # Save the trg.
+                output_tgt_file.write(target_sentence + '\n')
+
+            # Reset the annotator id.
+            cur_annotator_id = 0
+
             prev_sid = -1
             prev_eid = -1
             pos = 0
+
+            target_sentences.clear()
