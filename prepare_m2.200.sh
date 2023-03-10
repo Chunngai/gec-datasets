@@ -16,13 +16,7 @@ fi
 pip3 install packages/en_core_web_sm-1.2.0.tar.gz # Downloaded from https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-1.2.0/en_core_web_sm-1.2.0.tar.gz
 python3.6 -m spacy link en_core_web_sm en # Creates a shortcut link.
 
-for dataset in "fce-train" "nucle" "lang8" "wi_locness-train" "wi_locness-valid"; do
-  if [ ! -f "$M2/$dataset"".m2" ]; then
-    errant_parallel -orig "$RAW/$dataset"".src" -cor "$RAW/$dataset"".trg" -out "$M2/$dataset"".m2"
-  fi
-done
-
-for dataset in "valid" "train.w.err-free" "train.wo.err-free"; do
+for dataset in "fce-train" "nucle" "lang8" "wi_locness-train"; do
   if [ ! -f "$M2/$dataset"".m2" ]; then
     errant_parallel -orig "$RAW/$dataset"".src" -cor "$RAW/$dataset"".trg" -out "$M2/$dataset"".m2"
   fi
